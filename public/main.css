@@ -1,3 +1,24 @@
-h1 {
-    color: blue;
+#title{
+  text-align: center;
+}
+#recipeContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+#addButton {
+  margin-top: 50px;
+}
+.recipes {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border: 2px solid black;
+  border-left: 5px solid #008fb3;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.recipe {
+  background-color: #e1e1ea;
+  padding: 5px 5px;
 }
