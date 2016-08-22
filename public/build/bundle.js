@@ -64,6 +64,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var recipeLength = 3;
+
 	var myRecipes = [{
 	  "name": "Banana Bread",
 	  "ingredients": ["Bananas", "Flour", "Eggs", "Sugar", "Love"],
@@ -89,11 +91,14 @@
 	  componentWillMount: function componentWillMount() {
 	    this.setState({ recipes: myRecipes });
 	  },
+	  //need to figure this out
 	  addRecipe: function addRecipe(recipe) {
-	    this.state.recipe[this.state.recipe.length] = recipe;
-	    this.setState({ recipes: this.state.recipe });
+	    var newRecipes = this.state.recipes.concat(recipe);
+	    this.setState({ recipes: newRecipes });
+	    recipeLength++;
 	  },
 	  render: function render() {
+
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -105,8 +110,8 @@
 	      _react2.default.createElement(
 	        'div',
 	        { id: 'recipeContainer' },
-	        _react2.default.createElement(_Recipes2.default, { key: this.state.recipes.length, recipes: this.state.recipes }),
-	        _react2.default.createElement(_AddRecipe2.default, null)
+	        _react2.default.createElement(_Recipes2.default, { key: recipeLength, recipes: this.state.recipes }),
+	        _react2.default.createElement(_AddRecipe2.default, { addRecipe: this.addRecipe })
 	      )
 	    );
 	  }
@@ -21620,6 +21625,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var num = 4;
+
 	var AddRecipe = _react2.default.createClass({
 	  displayName: 'AddRecipe',
 
@@ -21632,18 +21639,24 @@
 	  close: function close() {
 	    this.setState({ showAdd: false });
 	  },
+	  handleSubmit: function handleSubmit(event) {
+	    event.preventDefault();
+	    this.setState({ showAdd: false });
+	    var recipe = {
+	      "name": event.target.name.value,
+	      "ingredients": event.target.ingredient.value.split(','),
+	      "id": num
+	    };
+	    this.props.addRecipe(recipe);
+	    num++;
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement(
-	        'h1',
-	        null,
-	        'test'
-	      ),
-	      _react2.default.createElement(
 	        _reactBootstrap.Button,
-	        { bsStyle: 'primary', bsSize: 'large', onClick: this.open },
+	        { id: 'addButton', bsStyle: 'primary', bsSize: 'large', onClick: this.open },
 	        'Add Recipe'
 	      ),
 	      _react2.default.createElement(
@@ -21655,28 +21668,34 @@
 	          _react2.default.createElement(
 	            _reactBootstrap.Modal.Title,
 	            null,
-	            'Modal heading'
+	            'Add Recipe'
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Modal.Body,
 	          null,
 	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Text in a modal'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Duis mollis, est non commodo luctus, nisi erat porttitor ligula.'
-	          ),
-	          _react2.default.createElement(
-	            'h4',
-	            null,
-	            'Popover in a modal'
-	          ),
-	          _react2.default.createElement('hr', null)
+	            'form',
+	            { className: 'addRecipeForm', onSubmit: this.handleSubmit },
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Enter Recipe Name'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', placeholder: 'Recipe Name' }),
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Enter Ingredients (separated by commas)'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', id: 'ingredient', name: 'ingredient', placeholder: 'Ingredients separated by commas' }),
+	            _react2.default.createElement('hr', null),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit' },
+	              'Add Recipe'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Modal.Footer,

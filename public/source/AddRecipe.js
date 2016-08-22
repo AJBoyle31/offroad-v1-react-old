@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
 
+var num = 4;
+
 var AddRecipe = React.createClass({
   getInitialState: function(){
     return { showAdd: false };
@@ -11,23 +13,34 @@ var AddRecipe = React.createClass({
   close: function(){
     this.setState({ showAdd: false });
   },
+  handleSubmit: function(event){
+    event.preventDefault();
+    this.setState({ showAdd: false });
+    var recipe = {
+    "name": event.target.name.value,
+    "ingredients": event.target.ingredient.value.split(','),
+    "id": num
+    };
+    this.props.addRecipe(recipe);
+    num++;
+  },
   render: function(){
     return (
-      <div><h1>test</h1>
-      <Button bsStyle="primary" bsSize="large" onClick={this.open}>Add Recipe</Button>
+      <div>
+      <Button id="addButton" bsStyle="primary" bsSize="large" onClick={this.open}>Add Recipe</Button>
       <Modal show={this.state.showAdd} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Add Recipe</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>Text in a modal</h4>
-            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-
-            <h4>Popover in a modal</h4>
-            
-
-            <hr />
-
+            <form className="addRecipeForm" onSubmit={this.handleSubmit}>
+            <h4>Enter Recipe Name</h4>
+            <input type="text" id="name" name="name" placeholder="Recipe Name" />
+            <h4>Enter Ingredients (separated by commas)</h4>
+            <input type="text" id="ingredient" name="ingredient" placeholder="Ingredients separated by commas" />
+            <hr/>
+            <button type="submit">Add Recipe</button>
+            </form>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>

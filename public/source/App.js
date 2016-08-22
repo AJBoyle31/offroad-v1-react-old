@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Recipes from './Recipes';
 import AddRecipe from './AddRecipe';
 
+var recipeLength = 3;
+
 var myRecipes = [
   { 
     "name": "Banana Bread",
@@ -30,18 +32,21 @@ var App = React.createClass({
   componentWillMount: function(){
     this.setState({recipes: myRecipes});
   },
+  //need to figure this out
   addRecipe: function(recipe){
-    this.state.recipe[this.state.recipe.length] = recipe;
-    this.setState({ recipes: this.state.recipe});
+    let newRecipes = this.state.recipes.concat(recipe);
+    this.setState({ recipes: newRecipes});
+    recipeLength++;
   },
   render: function(){
+    
     return (
     <div>
         <h1 id="title">My Recipe Box</h1>
         <div id="recipeContainer">
-          <Recipes  key={this.state.recipes.length} recipes={this.state.recipes} />
+          <Recipes  key={recipeLength} recipes={this.state.recipes} />
           
-          <AddRecipe />  
+          <AddRecipe addRecipe={this.addRecipe} />  
         </div>
       </div>
     );
