@@ -21555,21 +21555,17 @@
 	      { className: 'recipes' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'recipe' },
+	        { className: 'ingredients', onClick: this.toggleIngredients },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'ingredients', onClick: this.toggleIngredients },
-	          _react2.default.createElement(
-	            'h3',
-	            null,
-	            this.props.name
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          null,
-	          ingredient
+	          'h3',
+	          { id: 'recipeName' },
+	          this.props.name
 	        )
+	      ),
+	      _react2.default.createElement(
+	        'ul',
+	        null,
+	        ingredient
 	      )
 	    );
 	  }

@@ -24,12 +24,10 @@ var Recipe = React.createClass({
     }
     return (
         <div className="recipes">
-      <div className="recipe">
         <div className="ingredients" onClick={this.toggleIngredients}>
-          <h3>{this.props.name}</h3>
+          <h3 id="recipeName">{this.props.name}</h3>
         </div>
         <ul>{ingredient}</ul>
-      </div>
       </div>
     );
   }
