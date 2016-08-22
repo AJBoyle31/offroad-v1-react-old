@@ -23,3 +23,11 @@
 #recipeName {
   margin-top: 0px;
 }
+#buttonContainer {
+  text-align: center;
+}
+#deleteButton, #editButton {
+  margin-left: 5px;
+  margin-right: 5px;
+  color: black;
+}

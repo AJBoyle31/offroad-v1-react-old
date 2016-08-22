@@ -38,13 +38,18 @@ var App = React.createClass({
     this.setState({ recipes: newRecipes});
     recipeLength++;
   },
+  editRecipe: function(recipe){
+    let oldRecipes = this.state.recipes;
+    oldRecipes[recipe.id - 1] = recipe;
+    this.setState({ recipes: oldRecipes});
+  },
   render: function(){
     
     return (
     <div>
         <h1 id="title">My Recipe Box</h1>
         <div id="recipeContainer">
-          <Recipes  key={recipeLength} recipes={this.state.recipes} />
+          <Recipes  key={recipeLength} recipes={this.state.recipes} editRecipe={this.editRecipe}/>
           
           <AddRecipe addRecipe={this.addRecipe} />  
         </div>

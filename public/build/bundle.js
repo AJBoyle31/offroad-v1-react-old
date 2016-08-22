@@ -58,7 +58,7 @@
 
 	var _Recipes2 = _interopRequireDefault(_Recipes);
 
-	var _AddRecipe = __webpack_require__(175);
+	var _AddRecipe = __webpack_require__(429);
 
 	var _AddRecipe2 = _interopRequireDefault(_AddRecipe);
 
@@ -97,6 +97,11 @@
 	    this.setState({ recipes: newRecipes });
 	    recipeLength++;
 	  },
+	  editRecipe: function editRecipe(recipe) {
+	    var oldRecipes = this.state.recipes;
+	    oldRecipes[recipe.id - 1] = recipe;
+	    this.setState({ recipes: oldRecipes });
+	  },
 	  render: function render() {
 
 	    return _react2.default.createElement(
@@ -110,7 +115,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { id: 'recipeContainer' },
-	        _react2.default.createElement(_Recipes2.default, { key: recipeLength, recipes: this.state.recipes }),
+	        _react2.default.createElement(_Recipes2.default, { key: recipeLength, recipes: this.state.recipes, editRecipe: this.editRecipe }),
 	        _react2.default.createElement(_AddRecipe2.default, { addRecipe: this.addRecipe })
 	      )
 	    );
@@ -21494,10 +21499,11 @@
 	  displayName: 'Recipes',
 
 	  render: function render() {
+	    var _this = this;
 
 	    var recipe = this.props.recipes.map(function (recipe) {
 
-	      return _react2.default.createElement(_Recipe2.default, { key: recipe.id, name: recipe.name, ingredients: recipe.ingredients });
+	      return _react2.default.createElement(_Recipe2.default, { key: recipe.id, id: recipe.id, name: recipe.name, ingredients: recipe.ingredients, editRecipe: _this.props.editRecipe });
 	    });
 	    return _react2.default.createElement(
 	      'div',
@@ -21527,6 +21533,10 @@
 
 	var _Ingredients2 = _interopRequireDefault(_Ingredients);
 
+	var _EditRecipe = __webpack_require__(175);
+
+	var _EditRecipe2 = _interopRequireDefault(_EditRecipe);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Recipe = _react2.default.createClass({
@@ -21534,14 +21544,16 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      showIngredients: false
+	      showIngredients: false,
+	      showEditButton: false
 	    };
 	  },
 	  toggleIngredients: function toggleIngredients() {
 	    this.setState({ showIngredients: !this.state.showIngredients });
 	  },
 	  render: function render() {
-	    var ingredient = void 0;
+	    var ingredient = void 0,
+	        recipeButton = void 0;
 	    var num = 0;
 
 	    if (this.state.showIngredients) {
@@ -21549,6 +21561,16 @@
 	        num++;
 	        return _react2.default.createElement(_Ingredients2.default, { key: num, ingredient: ingredient });
 	      });
+	      recipeButton = _react2.default.createElement(
+	        'div',
+	        { id: 'buttonContainer' },
+	        _react2.default.createElement(_EditRecipe2.default, { ingredients: this.props.ingredients, name: this.props.name, id: this.props.id, editRecipe: this.props.editRecipe }),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-danger', id: 'deleteButton' },
+	          'Delete'
+	        )
+	      );
 	    }
 	    return _react2.default.createElement(
 	      'div',
@@ -21566,7 +21588,8 @@
 	        'ul',
 	        null,
 	        ingredient
-	      )
+	      ),
+	      recipeButton
 	    );
 	  }
 	});
@@ -21610,7 +21633,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -21621,93 +21644,91 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var num = 4;
+	var EditRecipe = _react2.default.createClass({
+	    displayName: 'EditRecipe',
 
-	var AddRecipe = _react2.default.createClass({
-	  displayName: 'AddRecipe',
-
-	  getInitialState: function getInitialState() {
-	    return { showAdd: false };
-	  },
-	  open: function open() {
-	    this.setState({ showAdd: true });
-	  },
-	  close: function close() {
-	    this.setState({ showAdd: false });
-	  },
-	  handleSubmit: function handleSubmit(event) {
-	    event.preventDefault();
-	    this.setState({ showAdd: false });
-	    var recipe = {
-	      "name": event.target.name.value,
-	      "ingredients": event.target.ingredient.value.split(','),
-	      "id": num
-	    };
-	    this.props.addRecipe(recipe);
-	    num++;
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { id: 'addButton', bsStyle: 'primary', bsSize: 'large', onClick: this.open },
-	        'Add Recipe'
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { show: this.state.showAdd, onHide: this.close },
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Header,
-	          { closeButton: true },
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Title,
+	    getInitialState: function getInitialState() {
+	        return { showEdit: false };
+	    },
+	    open: function open() {
+	        this.setState({ showEdit: true });
+	    },
+	    close: function close() {
+	        this.setState({ showEdit: false });
+	    },
+	    handleEdit: function handleEdit(event) {
+	        event.preventDefault();
+	        this.setState({ showEdit: false });
+	        var recipe = {
+	            "name": event.target.name.value,
+	            "ingredients": event.target.ingredient.value.split(','),
+	            "id": this.props.id
+	        };
+	        this.props.editRecipe(recipe);
+	    },
+	    render: function render() {
+	        var ingredients = this.props.ingredients.join(', ');
+	        return _react2.default.createElement(
+	            'div',
 	            null,
-	            'Add Recipe'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Body,
-	          null,
-	          _react2.default.createElement(
-	            'form',
-	            { className: 'addRecipeForm', onSubmit: this.handleSubmit },
 	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Enter Recipe Name'
+	                _reactBootstrap.Button,
+	                { id: 'editButton', bsStyle: 'warning', onClick: this.open },
+	                'Edit Recipe'
 	            ),
-	            _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', placeholder: 'Recipe Name' }),
 	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Enter Ingredients (separated by commas)'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', id: 'ingredient', name: 'ingredient', placeholder: 'Ingredients separated by commas' }),
-	            _react2.default.createElement('hr', null),
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit' },
-	              'Add Recipe'
+	                _reactBootstrap.Modal,
+	                { show: this.state.showEdit, onHide: this.close },
+	                _react2.default.createElement(
+	                    _reactBootstrap.Modal.Header,
+	                    { closeButton: true },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Modal.Title,
+	                        null,
+	                        'Edit Recipe'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Modal.Body,
+	                    null,
+	                    _react2.default.createElement(
+	                        'form',
+	                        { className: 'addRecipeForm', onSubmit: this.handleEdit },
+	                        _react2.default.createElement(
+	                            'h4',
+	                            null,
+	                            'Enter Recipe Name'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', defaultValue: this.props.name }),
+	                        _react2.default.createElement(
+	                            'h4',
+	                            null,
+	                            'Enter Ingredients (separated by commas)'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', id: 'ingredient', name: 'ingredient', defaultValue: ingredients }),
+	                        _react2.default.createElement('hr', null),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'submit' },
+	                            'Edit Recipe'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Modal.Footer,
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Button,
+	                        { onClick: this.close },
+	                        'Close'
+	                    )
+	                )
 	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Footer,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.close },
-	            'Close'
-	          )
-	        )
-	      )
-	    );
-	  }
+	        );
+	    }
 	});
 
-	exports.default = AddRecipe;
+	exports.default = EditRecipe;
 
 /***/ },
 /* 176 */
@@ -40541,6 +40562,112 @@
 	exports.bootstrapUtils = _bootstrapUtils;
 	exports.createChainedFunction = _createChainedFunction3['default'];
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
+
+/***/ },
+/* 429 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(176);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var num = 4;
+
+	var AddRecipe = _react2.default.createClass({
+	  displayName: 'AddRecipe',
+
+	  getInitialState: function getInitialState() {
+	    return { showAdd: false };
+	  },
+	  open: function open() {
+	    this.setState({ showAdd: true });
+	  },
+	  close: function close() {
+	    this.setState({ showAdd: false });
+	  },
+	  handleSubmit: function handleSubmit(event) {
+	    event.preventDefault();
+	    this.setState({ showAdd: false });
+	    var recipe = {
+	      "name": event.target.name.value,
+	      "ingredients": event.target.ingredient.value.split(','),
+	      "id": num
+	    };
+	    this.props.addRecipe(recipe);
+	    num++;
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { id: 'addButton', bsStyle: 'primary', bsSize: 'large', onClick: this.open },
+	        'Add Recipe'
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.state.showAdd, onHide: this.close },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            null,
+	            'Add Recipe'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            { className: 'addRecipeForm', onSubmit: this.handleSubmit },
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Enter Recipe Name'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', placeholder: 'Recipe Name' }),
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Enter Ingredients (separated by commas)'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', id: 'ingredient', name: 'ingredient', placeholder: 'Ingredients separated by commas' }),
+	            _react2.default.createElement('hr', null),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit' },
+	              'Add Recipe'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.close },
+	            'Close'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	exports.default = AddRecipe;
 
 /***/ }
 /******/ ]);

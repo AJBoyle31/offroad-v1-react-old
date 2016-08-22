@@ -8,7 +8,7 @@ var Recipes = React.createClass({
         
               return ( 
                 
-                <Recipe key={recipe.id} name={recipe.name} ingredients={recipe.ingredients} /> 
+                <Recipe key={recipe.id} id={recipe.id} name={recipe.name} ingredients={recipe.ingredients} editRecipe={this.props.editRecipe}/> 
                 
               );
     });
