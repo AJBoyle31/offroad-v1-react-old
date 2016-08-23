@@ -21552,11 +21552,17 @@
 	    this.setState({ showIngredients: !this.state.showIngredients });
 	  },
 	  render: function render() {
-	    var ingredient = void 0,
+	    var ingredientTitle = void 0,
+	        ingredient = void 0,
 	        recipeButton = void 0;
 	    var num = 0;
 
 	    if (this.state.showIngredients) {
+	      ingredientTitle = _react2.default.createElement(
+	        'h4',
+	        { id: 'ingredientTitle' },
+	        'Ingredients'
+	      );
 	      ingredient = this.props.ingredients.map(function (ingredient) {
 	        num++;
 	        return _react2.default.createElement(_Ingredients2.default, { key: num, ingredient: ingredient });
@@ -21567,7 +21573,7 @@
 	        _react2.default.createElement(_EditRecipe2.default, { ingredients: this.props.ingredients, name: this.props.name, id: this.props.id, editRecipe: this.props.editRecipe }),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'btn btn-danger', id: 'deleteButton' },
+	          { className: 'btn btn-danger debuttons', id: 'deleteButton' },
 	          'Delete'
 	        )
 	      );
@@ -21584,6 +21590,7 @@
 	          this.props.name
 	        )
 	      ),
+	      ingredientTitle,
 	      _react2.default.createElement(
 	        'ul',
 	        null,
@@ -21673,7 +21680,7 @@
 	            null,
 	            _react2.default.createElement(
 	                _reactBootstrap.Button,
-	                { id: 'editButton', bsStyle: 'warning', onClick: this.open },
+	                { id: 'editButton', className: 'debuttons', bsStyle: 'warning', onClick: this.open },
 	                'Edit Recipe'
 	            ),
 	            _react2.default.createElement(
