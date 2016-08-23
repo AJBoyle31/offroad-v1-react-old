@@ -15,10 +15,11 @@ var Recipe = React.createClass({
     this.setState({showIngredients: !this.state.showIngredients});
   },
   render: function(){
-    let ingredient, recipeButton;
+    let ingredientTitle, ingredient, recipeButton;
     let num=0;
     
     if (this.state.showIngredients) {
+      ingredientTitle = <h4 id="ingredientTitle">Ingredients</h4>;
       ingredient = this.props.ingredients.map((ingredient) => {
         num++;
       return (<Ingredients key={num} ingredient={ingredient} />);
@@ -26,7 +27,7 @@ var Recipe = React.createClass({
       recipeButton =
         <div id="buttonContainer">
         <EditRecipe ingredients={this.props.ingredients} name={this.props.name} id={this.props.id} editRecipe={this.props.editRecipe}/>
-        <button className="btn btn-danger" id="deleteButton">Delete</button> 
+        <button className="btn btn-danger debuttons" id="deleteButton">Delete</button> 
         </div>;
     }
     return (
@@ -34,6 +35,7 @@ var Recipe = React.createClass({
         <div className="ingredients" onClick={this.toggleIngredients}>
           <h3 id="recipeName">{this.props.name}</h3>
         </div>
+        {ingredientTitle}
         <ul>{ingredient}</ul>
         {recipeButton}
       </div>
