@@ -43,13 +43,18 @@ var App = React.createClass({
     oldRecipes[recipe.id - 1] = recipe;
     this.setState({ recipes: oldRecipes});
   },
+  deleteRecipe: function(id){
+    let prevRecipeState = this.state.recipes;
+    prevRecipeState.splice(id - 1, 1);
+    this.setState({recipes: prevRecipeState});
+  },
   render: function(){
     
     return (
     <div>
         <h1 id="title">My Recipe Box</h1>
         <div id="recipeContainer">
-          <Recipes  key={recipeLength} recipes={this.state.recipes} editRecipe={this.editRecipe}/>
+          <Recipes  key={recipeLength} recipes={this.state.recipes} editRecipe={this.editRecipe} deleteRecipe={this.deleteRecipe} />
           
           <AddRecipe addRecipe={this.addRecipe} />  
         </div>

@@ -102,6 +102,11 @@
 	    oldRecipes[recipe.id - 1] = recipe;
 	    this.setState({ recipes: oldRecipes });
 	  },
+	  deleteRecipe: function deleteRecipe(id) {
+	    var prevRecipeState = this.state.recipes;
+	    prevRecipeState.splice(id - 1, 1);
+	    this.setState({ recipes: prevRecipeState });
+	  },
 	  render: function render() {
 
 	    return _react2.default.createElement(
@@ -115,7 +120,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { id: 'recipeContainer' },
-	        _react2.default.createElement(_Recipes2.default, { key: recipeLength, recipes: this.state.recipes, editRecipe: this.editRecipe }),
+	        _react2.default.createElement(_Recipes2.default, { key: recipeLength, recipes: this.state.recipes, editRecipe: this.editRecipe, deleteRecipe: this.deleteRecipe }),
 	        _react2.default.createElement(_AddRecipe2.default, { addRecipe: this.addRecipe })
 	      )
 	    );
@@ -21503,7 +21508,12 @@
 
 	    var recipe = this.props.recipes.map(function (recipe) {
 
-	      return _react2.default.createElement(_Recipe2.default, { key: recipe.id, id: recipe.id, name: recipe.name, ingredients: recipe.ingredients, editRecipe: _this.props.editRecipe });
+	      return _react2.default.createElement(_Recipe2.default, { key: recipe.id,
+	        id: recipe.id,
+	        name: recipe.name,
+	        ingredients: recipe.ingredients,
+	        editRecipe: _this.props.editRecipe,
+	        deleteRecipe: _this.props.deleteRecipe });
 	    });
 	    return _react2.default.createElement(
 	      'div',
@@ -21551,6 +21561,10 @@
 	  toggleIngredients: function toggleIngredients() {
 	    this.setState({ showIngredients: !this.state.showIngredients });
 	  },
+	  handleClick: function handleClick(event) {
+	    this.props.deleteRecipe(this.props.id);
+	    event.preventDefault();
+	  },
 	  render: function render() {
 	    var ingredientTitle = void 0,
 	        ingredient = void 0,
@@ -21573,7 +21587,7 @@
 	        _react2.default.createElement(_EditRecipe2.default, { ingredients: this.props.ingredients, name: this.props.name, id: this.props.id, editRecipe: this.props.editRecipe }),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'btn btn-danger debuttons', id: 'deleteButton' },
+	          { className: 'btn btn-danger debuttons', id: 'deleteButton', onClick: this.handleClick },
 	          'Delete'
 	        )
 	      );
