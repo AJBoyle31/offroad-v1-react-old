@@ -44,8 +44,9 @@ var App = React.createClass({
     this.setState({ recipes: oldRecipes});
   },
   deleteRecipe: function(id){
+    let recipeIndex = this.state.recipes.findIndex((recipe)=>recipe.id == id);
     let prevRecipeState = this.state.recipes;
-    prevRecipeState.splice(id - 1, 1);
+    prevRecipeState.splice(recipeIndex, 1);
     this.setState({recipes: prevRecipeState});
   },
   render: function(){
