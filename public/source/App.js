@@ -38,9 +38,10 @@ var App = React.createClass({
     this.setState({ recipes: newRecipes});
     recipeLength++;
   },
-  editRecipe: function(recipe){
+  editRecipe: function(recipe, id){
+    let recipeIndex = this.state.recipes.findIndex((recipe)=>recipe.id == id);
     let oldRecipes = this.state.recipes;
-    oldRecipes[recipe.id - 1] = recipe;
+    oldRecipes[recipeIndex] = recipe;
     this.setState({ recipes: oldRecipes});
   },
   deleteRecipe: function(id){

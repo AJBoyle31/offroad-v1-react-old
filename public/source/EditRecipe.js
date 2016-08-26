@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, FormGroup, Form, Col, FormControl} from 'react-bootstrap';
 
 var EditRecipe = React.createClass({
     getInitialState: function(){
@@ -14,12 +14,14 @@ var EditRecipe = React.createClass({
     handleEdit: function(event){
         event.preventDefault();
         this.setState({ showEdit: false });
+        var name = document.getElementById("formHorizontalRecipeName").value;
+        var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
         var recipe = {
-        "name": event.target.name.value,
-        "ingredients": event.target.ingredient.value.split(','),
+        "name": name,
+        "ingredients": ingredients.split(','),
         "id": this.props.id
         };
-    this.props.editRecipe(recipe);
+    this.props.editRecipe(recipe, this.props.id);
     },
     render: function(){
         let ingredients = this.props.ingredients.join(', ');
@@ -31,21 +33,33 @@ var EditRecipe = React.createClass({
                         <Modal.Title>Edit Recipe</Modal.Title>
                     </Modal.Header>
                 <Modal.Body>
-                    <form className="addRecipeForm" onSubmit={this.handleEdit}>
-                    <h4>Enter Recipe Name</h4>
-                    <input type="text" id="name" name="name" defaultValue={this.props.name}/>
-                    <h4>Enter Ingredients (separated by commas)</h4>
-                    <input type="text" id="ingredient" name="ingredient" defaultValue={ingredients}/>
-                    <hr/>
-                    <button type="submit">Edit Recipe</button>
-            </form>
+                    <Form horizontal>
+              <FormGroup controlId="formHorizontalRecipeName">
+                <Col sm={2}>
+                  Name:
+                </Col>
+                <Col sm={10}>
+                  <FormControl type="text" placeholder="Recipe Name" defaultValue={this.props.name}/>
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="formHorizontalRecipeIngredients">
+                <Col sm={2}>
+                  Ingredients:
+                </Col>
+                <Col sm={10}>
+                  <FormControl type="text" placeholder="Ingredients separated by commas" defaultValue={this.props.ingredients} />
+                </Col>
+              </FormGroup>
+              
+            </Form>
           </Modal.Body>
           <Modal.Footer>
+            <Button onClick={this.handleEdit}>Edit Recipe</Button>
             <Button onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>    
-        )
+        );
     }
 });
 

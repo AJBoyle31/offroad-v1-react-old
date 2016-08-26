@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, FormGroup, Form, Col, FormControl} from 'react-bootstrap';
+
 
 var num = 4;
 
@@ -16,9 +17,11 @@ var AddRecipe = React.createClass({
   handleSubmit: function(event){
     event.preventDefault();
     this.setState({ showAdd: false });
+    var name = document.getElementById("formHorizontalRecipeName").value;
+    var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
     var recipe = {
-    "name": event.target.name.value,
-    "ingredients": event.target.ingredient.value.split(','),
+    "name": name,
+    "ingredients": ingredients.split(','),
     "id": num
     };
     this.props.addRecipe(recipe);
@@ -33,16 +36,28 @@ var AddRecipe = React.createClass({
             <Modal.Title>Add Recipe</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form className="addRecipeForm" onSubmit={this.handleSubmit}>
-            <h4>Enter Recipe Name</h4>
-            <input type="text" id="name" name="name" placeholder="Recipe Name" />
-            <h4>Enter Ingredients (separated by commas)</h4>
-            <input type="text" id="ingredient" name="ingredient" placeholder="Ingredients separated by commas" />
-            <hr/>
-            <button type="submit">Add Recipe</button>
-            </form>
+            <Form horizontal>
+              <FormGroup controlId="formHorizontalRecipeName">
+                <Col sm={2}>
+                  Name:
+                </Col>
+                <Col sm={10}>
+                  <FormControl type="text" placeholder="Recipe Name"/>
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="formHorizontalRecipeIngredients">
+                <Col sm={2}>
+                  Ingredients:
+                </Col>
+                <Col sm={10}>
+                  <FormControl type="text" placeholder="Ingredients separated by commas" />
+                </Col>
+              </FormGroup>
+              
+            </Form>
           </Modal.Body>
           <Modal.Footer>
+            <Button onClick={this.handleSubmit}>Add Recipe</Button>
             <Button onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>

@@ -97,9 +97,12 @@
 	    this.setState({ recipes: newRecipes });
 	    recipeLength++;
 	  },
-	  editRecipe: function editRecipe(recipe) {
+	  editRecipe: function editRecipe(recipe, id) {
+	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
+	      return recipe.id == id;
+	    });
 	    var oldRecipes = this.state.recipes;
-	    oldRecipes[recipe.id - 1] = recipe;
+	    oldRecipes[recipeIndex] = recipe;
 	    this.setState({ recipes: oldRecipes });
 	  },
 	  deleteRecipe: function deleteRecipe(id) {
@@ -21683,12 +21686,14 @@
 	    handleEdit: function handleEdit(event) {
 	        event.preventDefault();
 	        this.setState({ showEdit: false });
+	        var name = document.getElementById("formHorizontalRecipeName").value;
+	        var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
 	        var recipe = {
-	            "name": event.target.name.value,
-	            "ingredients": event.target.ingredient.value.split(','),
+	            "name": name,
+	            "ingredients": ingredients.split(','),
 	            "id": this.props.id
 	        };
-	        this.props.editRecipe(recipe);
+	        this.props.editRecipe(recipe, this.props.id);
 	    },
 	    render: function render() {
 	        var ingredients = this.props.ingredients.join(', ');
@@ -21716,31 +21721,46 @@
 	                    _reactBootstrap.Modal.Body,
 	                    null,
 	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'addRecipeForm', onSubmit: this.handleEdit },
+	                        _reactBootstrap.Form,
+	                        { horizontal: true },
 	                        _react2.default.createElement(
-	                            'h4',
-	                            null,
-	                            'Enter Recipe Name'
+	                            _reactBootstrap.FormGroup,
+	                            { controlId: 'formHorizontalRecipeName' },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { sm: 2 },
+	                                'Name:'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { sm: 10 },
+	                                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Recipe Name', defaultValue: this.props.name })
+	                            )
 	                        ),
-	                        _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', defaultValue: this.props.name }),
 	                        _react2.default.createElement(
-	                            'h4',
-	                            null,
-	                            'Enter Ingredients (separated by commas)'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', id: 'ingredient', name: 'ingredient', defaultValue: ingredients }),
-	                        _react2.default.createElement('hr', null),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'submit' },
-	                            'Edit Recipe'
+	                            _reactBootstrap.FormGroup,
+	                            { controlId: 'formHorizontalRecipeIngredients' },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { sm: 2 },
+	                                'Ingredients:'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { sm: 10 },
+	                                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Ingredients separated by commas', defaultValue: this.props.ingredients })
+	                            )
 	                        )
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    _reactBootstrap.Modal.Footer,
 	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Button,
+	                        { onClick: this.handleEdit },
+	                        'Edit Recipe'
+	                    ),
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Button,
 	                        { onClick: this.close },
@@ -40622,9 +40642,11 @@
 	  handleSubmit: function handleSubmit(event) {
 	    event.preventDefault();
 	    this.setState({ showAdd: false });
+	    var name = document.getElementById("formHorizontalRecipeName").value;
+	    var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
 	    var recipe = {
-	      "name": event.target.name.value,
-	      "ingredients": event.target.ingredient.value.split(','),
+	      "name": name,
+	      "ingredients": ingredients.split(','),
 	      "id": num
 	    };
 	    this.props.addRecipe(recipe);
@@ -40655,31 +40677,46 @@
 	          _reactBootstrap.Modal.Body,
 	          null,
 	          _react2.default.createElement(
-	            'form',
-	            { className: 'addRecipeForm', onSubmit: this.handleSubmit },
+	            _reactBootstrap.Form,
+	            { horizontal: true },
 	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Enter Recipe Name'
+	              _reactBootstrap.FormGroup,
+	              { controlId: 'formHorizontalRecipeName' },
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { sm: 2 },
+	                'Name:'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { sm: 10 },
+	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Recipe Name' })
+	              )
 	            ),
-	            _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', placeholder: 'Recipe Name' }),
 	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Enter Ingredients (separated by commas)'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', id: 'ingredient', name: 'ingredient', placeholder: 'Ingredients separated by commas' }),
-	            _react2.default.createElement('hr', null),
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit' },
-	              'Add Recipe'
+	              _reactBootstrap.FormGroup,
+	              { controlId: 'formHorizontalRecipeIngredients' },
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { sm: 2 },
+	                'Ingredients:'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Col,
+	                { sm: 10 },
+	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Ingredients separated by commas' })
+	              )
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Modal.Footer,
 	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.handleSubmit },
+	            'Add Recipe'
+	          ),
 	          _react2.default.createElement(
 	            _reactBootstrap.Button,
 	            { onClick: this.close },
