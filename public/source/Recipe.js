@@ -1,6 +1,7 @@
 import React from 'react';
 import Ingredients from './Ingredients';
 import EditRecipe from './EditRecipe';
+import {Button, ButtonToolbar} from 'react-bootstrap';
 
 
 
@@ -30,8 +31,10 @@ var Recipe = React.createClass({
         });
       recipeButton =
         <div id="buttonContainer">
-        <EditRecipe ingredients={this.props.ingredients} name={this.props.name} id={this.props.id} editRecipe={this.props.editRecipe}/>
-        <button className="btn btn-danger debuttons" id="deleteButton" onClick={this.handleClick}>Delete</button> 
+        <ButtonToolbar>
+          <EditRecipe ingredients={this.props.ingredients} name={this.props.name} id={this.props.id} editRecipe={this.props.editRecipe}/>
+          <Button className="debuttons" bsStyle="danger" id="deleteButton" onClick={this.handleClick}>Delete</Button> 
+        </ButtonToolbar>
         </div>;
     }
     return (

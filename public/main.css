@@ -26,11 +26,12 @@
   margin-top: 0px;
 }
 #buttonContainer {
-   text-align: center;
-  
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
 }
 #deleteButton, #editButton {
+  
   color: black;
   border: 1px solid black;
-
 }

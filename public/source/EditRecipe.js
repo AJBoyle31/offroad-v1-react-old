@@ -27,7 +27,7 @@ var EditRecipe = React.createClass({
         let ingredients = this.props.ingredients.join(', ');
         return (
             <div>
-            <Button id="editButton" className="debuttons" bsStyle="warning" onClick={this.open}>Edit Recipe</Button>
+            <Button id="editButton" className="debuttons" bsStyle="success" onClick={this.open}>Edit Recipe</Button>
                 <Modal show={this.state.showEdit} onHide={this.close}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Recipe</Modal.Title>

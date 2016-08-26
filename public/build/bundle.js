@@ -21553,6 +21553,8 @@
 
 	var _EditRecipe2 = _interopRequireDefault(_EditRecipe);
 
+	var _reactBootstrap = __webpack_require__(176);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Recipe = _react2.default.createClass({
@@ -21590,11 +21592,15 @@
 	      recipeButton = _react2.default.createElement(
 	        'div',
 	        { id: 'buttonContainer' },
-	        _react2.default.createElement(_EditRecipe2.default, { ingredients: this.props.ingredients, name: this.props.name, id: this.props.id, editRecipe: this.props.editRecipe }),
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'btn btn-danger debuttons', id: 'deleteButton', onClick: this.handleClick },
-	          'Delete'
+	          _reactBootstrap.ButtonToolbar,
+	          null,
+	          _react2.default.createElement(_EditRecipe2.default, { ingredients: this.props.ingredients, name: this.props.name, id: this.props.id, editRecipe: this.props.editRecipe }),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { className: 'debuttons', bsStyle: 'danger', id: 'deleteButton', onClick: this.handleClick },
+	            'Delete'
+	          )
 	        )
 	      );
 	    }
@@ -21702,7 +21708,7 @@
 	            null,
 	            _react2.default.createElement(
 	                _reactBootstrap.Button,
-	                { id: 'editButton', className: 'debuttons', bsStyle: 'warning', onClick: this.open },
+	                { id: 'editButton', className: 'debuttons', bsStyle: 'success', onClick: this.open },
 	                'Edit Recipe'
 	            ),
 	            _react2.default.createElement(
