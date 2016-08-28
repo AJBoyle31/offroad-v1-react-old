@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(publicPath));
 
-var server = app.listen(8080, function () {
+var server = app.listen(process.env.PORT || 8080, function () {
 
   var host = ip.address();
   var port = server.address().port;
