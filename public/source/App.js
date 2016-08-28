@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import Recipes from './Recipes';
 import AddRecipe from './AddRecipe';
 
-var recipeLength = 3;
-
 var myRecipes = [
   { 
     "name": "Banana Bread",
@@ -23,6 +21,19 @@ var myRecipes = [
   }
 ];
 
+function isLocalStorageSupported(){
+  try {
+    localStorage.setItem("test", "test");
+    localStorage.removeItem("test");
+    return true;
+  }
+  catch (e) {
+    return false;
+  }
+}
+
+var recipeLength = 3;
+
 var App = React.createClass({
   setInitialState: function(){
     return {
@@ -30,12 +41,22 @@ var App = React.createClass({
     };
   },
   componentWillMount: function(){
-    this.setState({recipes: myRecipes});
+    if (isLocalStorageSupported){
+      if(localStorage["recipes"] === undefined){
+        localStorage.setItem("recipes", JSON.stringify(myRecipes));
+      }
+      else {
+        var retrievedData = localStorage.getItem("recipes");
+        myRecipes = JSON.parse(retrievedData);
+      }
+    }    
+  this.setState({recipes: myRecipes});
   },
   //need to figure this out
   addRecipe: function(recipe){
     let newRecipes = this.state.recipes.concat(recipe);
     this.setState({ recipes: newRecipes});
+    localStorage.setItem("recipes", JSON.stringify(newRecipes));
     recipeLength++;
   },
   editRecipe: function(recipe, id){
@@ -43,12 +64,14 @@ var App = React.createClass({
     let oldRecipes = this.state.recipes;
     oldRecipes[recipeIndex] = recipe;
     this.setState({ recipes: oldRecipes});
+    localStorage.setItem("recipes", JSON.stringify(oldRecipes));
   },
   deleteRecipe: function(id){
     let recipeIndex = this.state.recipes.findIndex((recipe)=>recipe.id == id);
     let prevRecipeState = this.state.recipes;
     prevRecipeState.splice(recipeIndex, 1);
     this.setState({recipes: prevRecipeState});
+    localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
   },
   render: function(){
     

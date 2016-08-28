@@ -64,8 +64,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var recipeLength = 3;
-
 	var myRecipes = [{
 	  "name": "Banana Bread",
 	  "ingredients": ["Bananas", "Flour", "Eggs", "Sugar", "Love"],
@@ -80,6 +78,18 @@
 	  "id": 3
 	}];
 
+	function isLocalStorageSupported() {
+	  try {
+	    localStorage.setItem("test", "test");
+	    localStorage.removeItem("test");
+	    return true;
+	  } catch (e) {
+	    return false;
+	  }
+	}
+
+	var recipeLength = 3;
+
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 
@@ -89,12 +99,21 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
+	    if (isLocalStorageSupported) {
+	      if (localStorage["recipes"] === undefined) {
+	        localStorage.setItem("recipes", JSON.stringify(myRecipes));
+	      } else {
+	        var retrievedData = localStorage.getItem("recipes");
+	        myRecipes = JSON.parse(retrievedData);
+	      }
+	    }
 	    this.setState({ recipes: myRecipes });
 	  },
 	  //need to figure this out
 	  addRecipe: function addRecipe(recipe) {
 	    var newRecipes = this.state.recipes.concat(recipe);
 	    this.setState({ recipes: newRecipes });
+	    localStorage.setItem("recipes", JSON.stringify(newRecipes));
 	    recipeLength++;
 	  },
 	  editRecipe: function editRecipe(recipe, id) {
@@ -104,6 +123,7 @@
 	    var oldRecipes = this.state.recipes;
 	    oldRecipes[recipeIndex] = recipe;
 	    this.setState({ recipes: oldRecipes });
+	    localStorage.setItem("recipes", JSON.stringify(oldRecipes));
 	  },
 	  deleteRecipe: function deleteRecipe(id) {
 	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
@@ -112,6 +132,7 @@
 	    var prevRecipeState = this.state.recipes;
 	    prevRecipeState.splice(recipeIndex, 1);
 	    this.setState({ recipes: prevRecipeState });
+	    localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
 	  },
 	  render: function render() {
 
