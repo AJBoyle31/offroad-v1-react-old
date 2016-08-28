@@ -12,6 +12,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(publicPath));
 
+app.get('/', function(req, res){
+  res.sendFile(process.cwd() + 'index.html');
+});
+
 var server = app.listen(8080, function () {
 
   var host = ip.address();
