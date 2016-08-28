@@ -3,7 +3,7 @@ import React from 'react';
 
 var Ingredients = React.createClass({
   render: function(){
-    return <li>{this.props.ingredient}</li>;
+    return <li className="ingredients">{this.props.ingredient}</li>;
   }
 });
 
