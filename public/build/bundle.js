@@ -21602,7 +21602,7 @@
 
 	    if (this.state.showIngredients) {
 	      ingredientTitle = _react2.default.createElement(
-	        'h4',
+	        'h3',
 	        { id: 'ingredientTitle' },
 	        'Ingredients'
 	      );
@@ -21632,8 +21632,8 @@
 	        'div',
 	        { className: 'ingredients', onClick: this.toggleIngredients },
 	        _react2.default.createElement(
-	          'h3',
-	          { id: 'recipeName' },
+	          'h2',
+	          { className: 'recipeName' },
 	          this.props.name
 	        )
 	      ),
@@ -21654,7 +21654,7 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21667,12 +21667,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Ingredients = _react2.default.createClass({
-	  displayName: 'Ingredients',
+	  displayName: "Ingredients",
 
 	  render: function render() {
 	    return _react2.default.createElement(
-	      'li',
-	      null,
+	      "li",
+	      { className: "ingredients" },
 	      this.props.ingredient
 	    );
 	  }
