@@ -62,6 +62,10 @@
 
 	var _AddRecipe2 = _interopRequireDefault(_AddRecipe);
 
+	var _Title = __webpack_require__(430);
+
+	var _Title2 = _interopRequireDefault(_Title);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var myRecipes = [{
@@ -78,6 +82,8 @@
 	  "id": 3
 	}];
 
+	var name = "My";
+
 	function isLocalStorageSupported() {
 	  try {
 	    localStorage.setItem("test", "test");
@@ -88,33 +94,35 @@
 	  }
 	}
 
-	var recipeLength = 3;
-
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 
 	  setInitialState: function setInitialState() {
 	    return {
-	      recipes: []
+	      recipes: [],
+	      name: ""
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
 	    if (isLocalStorageSupported) {
 	      if (localStorage["recipes"] === undefined) {
 	        localStorage.setItem("recipes", JSON.stringify(myRecipes));
+	        localStorage.setItem("name", "My");
 	      } else {
 	        var retrievedData = localStorage.getItem("recipes");
+	        var retrieveName = localStorage.getItem("name");
 	        myRecipes = JSON.parse(retrievedData);
+	        name = JSON.parse(retrieveName);
 	      }
 	    }
-	    this.setState({ recipes: myRecipes });
+	    this.setState({ recipes: myRecipes,
+	      name: name
+	    });
 	  },
-	  //need to figure this out
 	  addRecipe: function addRecipe(recipe) {
 	    var newRecipes = this.state.recipes.concat(recipe);
 	    this.setState({ recipes: newRecipes });
 	    localStorage.setItem("recipes", JSON.stringify(newRecipes));
-	    recipeLength++;
 	  },
 	  editRecipe: function editRecipe(recipe, id) {
 	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
@@ -134,21 +142,21 @@
 	    this.setState({ recipes: prevRecipeState });
 	    localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
 	  },
+	  handleNameChange: function handleNameChange(name) {
+	    this.setState({ name: name });
+	    localStorage.setItem("name", JSON.stringify(name));
+	  },
 	  render: function render() {
 
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(
-	        'h1',
-	        { id: 'title' },
-	        'My Recipe Box'
-	      ),
+	      _react2.default.createElement(_Title2.default, { nameCallback: this.handleNameChange, name: this.state.name }),
 	      _react2.default.createElement(
 	        'div',
 	        { id: 'recipeContainer' },
-	        _react2.default.createElement(_Recipes2.default, { key: recipeLength, recipes: this.state.recipes, editRecipe: this.editRecipe, deleteRecipe: this.deleteRecipe }),
-	        _react2.default.createElement(_AddRecipe2.default, { addRecipe: this.addRecipe })
+	        _react2.default.createElement(_Recipes2.default, { recipes: this.state.recipes, editRecipe: this.editRecipe, deleteRecipe: this.deleteRecipe }),
+	        _react2.default.createElement(_AddRecipe2.default, { addRecipe: this.addRecipe, recipes: this.state.recipes })
 	      )
 	    );
 	  }
@@ -40652,7 +40660,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var num = 4;
+	function randomIdGenerator() {
+	  var random = Math.round(Math.random() * 9999999);
+	  return random;
+	}
 
 	var AddRecipe = _react2.default.createClass({
 	  displayName: 'AddRecipe',
@@ -40671,13 +40682,13 @@
 	    this.setState({ showAdd: false });
 	    var name = document.getElementById("formHorizontalRecipeName").value;
 	    var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
+	    var id = randomIdGenerator();
 	    var recipe = {
 	      "name": name,
 	      "ingredients": ingredients.split(','),
-	      "id": num
+	      "id": id
 	    };
 	    this.props.addRecipe(recipe);
-	    num++;
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -40756,6 +40767,37 @@
 	});
 
 	exports.default = AddRecipe;
+
+/***/ },
+/* 430 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Title = _react2.default.createClass({
+	    displayName: "Title",
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "h1",
+	            { id: "title" },
+	            this.props.name,
+	            " Recipe Box"
+	        );
+	    }
+	});
+
+	exports.default = Title;
 
 /***/ }
 /******/ ]);
