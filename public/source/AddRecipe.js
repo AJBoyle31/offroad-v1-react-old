@@ -2,7 +2,11 @@ import React from 'react';
 import {Button, Modal, FormGroup, Form, Col, FormControl} from 'react-bootstrap';
 
 
-var num = 4;
+function randomIdGenerator(){
+  var random = Math.round(Math.random() * 9999999);
+  return random;
+}
+
 
 var AddRecipe = React.createClass({
   getInitialState: function(){
@@ -19,13 +23,13 @@ var AddRecipe = React.createClass({
     this.setState({ showAdd: false });
     var name = document.getElementById("formHorizontalRecipeName").value;
     var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
+    var id = randomIdGenerator();
     var recipe = {
     "name": name,
     "ingredients": ingredients.split(','),
-    "id": num
+    "id": id
     };
     this.props.addRecipe(recipe);
-    num++;
   },
   render: function(){
     return (
