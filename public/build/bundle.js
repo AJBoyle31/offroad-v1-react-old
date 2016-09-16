@@ -82,7 +82,7 @@
 	  "id": 3
 	}];
 
-	var name = "My";
+	var name = "My recipe box";
 
 	function isLocalStorageSupported() {
 	  try {
@@ -107,12 +107,16 @@
 	    if (isLocalStorageSupported) {
 	      if (localStorage["recipes"] === undefined) {
 	        localStorage.setItem("recipes", JSON.stringify(myRecipes));
-	        localStorage.setItem("name", "My");
+	        localStorage.setItem("name", "My Recipe Box");
 	      } else {
 	        var retrievedData = localStorage.getItem("recipes");
 	        var retrieveName = localStorage.getItem("name");
 	        myRecipes = JSON.parse(retrievedData);
-	        name = JSON.parse(retrieveName);
+	        if (!retrieveName) {
+	          name = name;
+	        } else {
+	          name = JSON.parse(retrieveName);
+	        }
 	      }
 	    }
 	    this.setState({ recipes: myRecipes,
@@ -40772,7 +40776,7 @@
 /* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -40782,17 +40786,90 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactBootstrap = __webpack_require__(176);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Title = _react2.default.createClass({
-	    displayName: "Title",
+	    displayName: 'Title',
 
+	    getInitialState: function getInitialState() {
+	        return { showTitle: false };
+	    },
+	    open: function open() {
+	        this.setState({ showTitle: true });
+	    },
+	    close: function close() {
+	        this.setState({ showTitle: false });
+	    },
+	    handleTitleChange: function handleTitleChange(event) {
+	        event.preventDefault();
+	        this.setState({ showTitle: false });
+	        var title = document.getElementById("formHorizontalTitleName").value;
+	        this.props.nameCallback(title);
+	    },
 	    render: function render() {
 	        return _react2.default.createElement(
-	            "h1",
-	            { id: "title" },
-	            this.props.name,
-	            " Recipe Box"
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	                'h1',
+	                { id: 'title' },
+	                _react2.default.createElement(
+	                    'a',
+	                    { onClick: this.open },
+	                    this.props.name
+	                )
+	            ),
+	            _react2.default.createElement(
+	                _reactBootstrap.Modal,
+	                { show: this.state.showTitle, onHide: this.close },
+	                _react2.default.createElement(
+	                    _reactBootstrap.Modal.Header,
+	                    { closeButton: true },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Modal.Title,
+	                        null,
+	                        'Edit Recipe Box Title'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Modal.Body,
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Form,
+	                        { horizontal: true },
+	                        _react2.default.createElement(
+	                            _reactBootstrap.FormGroup,
+	                            { controlId: 'formHorizontalTitleName' },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { sm: 2 },
+	                                'Title:'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { sm: 10 },
+	                                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', defaultValue: this.props.name })
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    _reactBootstrap.Modal.Footer,
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Button,
+	                        { onClick: this.handleTitleChange },
+	                        'Confirm'
+	                    ),
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Button,
+	                        { onClick: this.close },
+	                        'Close'
+	                    )
+	                )
+	            )
 	        );
 	    }
 	});
