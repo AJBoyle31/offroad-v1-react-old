@@ -9,6 +9,12 @@ body {
   color: white;
   text-shadow: 2px 2px 2px black;
   font-size: 350%;
+  a {
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 #recipeContainer {
   margin-left: auto;
