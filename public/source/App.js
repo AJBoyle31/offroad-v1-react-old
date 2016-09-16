@@ -22,7 +22,7 @@ var myRecipes = [
   }
 ];
 
-var name = "My";
+var name = "My Recipe Box";
 
 function isLocalStorageSupported(){
   try {
@@ -48,13 +48,17 @@ var App = React.createClass({
     if (isLocalStorageSupported){
       if(localStorage["recipes"] === undefined){
         localStorage.setItem("recipes", JSON.stringify(myRecipes));
-        localStorage.setItem("name", "My");
+        localStorage.setItem("name", "My Recipe Box");
       }
       else {
         var retrievedData = localStorage.getItem("recipes");
         var retrieveName = localStorage.getItem("name");
         myRecipes = JSON.parse(retrievedData);
-        name = JSON.parse(retrieveName);
+        if(!retrieveName) {
+          name = name;
+        } else {
+          name = JSON.parse(retrieveName);
+        }
       }
     }    
     this.setState({ recipes: myRecipes,
