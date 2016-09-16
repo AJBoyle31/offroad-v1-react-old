@@ -12,10 +12,16 @@ var Title = React.createClass({
     close: function(){
         this.setState({showTitle: false});
     },
+    handleTitleChange: function(event){
+        event.preventDefault();
+        this.setState({showTitle: false});
+        var title = document.getElementById("formHorizontalTitleName").value;
+        this.props.nameCallback(title);
+    },
     render: function(){
         return (
             <div>
-            <h1 id="title"><a onClick={this.open}>{this.props.name} Recipe Box</a></h1>
+            <h1 id="title"><a onClick={this.open}>{this.props.name}</a></h1>
             <Modal show={this.state.showTitle} onHide={this.close}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Recipe Box Title</Modal.Title>
