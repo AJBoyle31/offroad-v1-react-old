@@ -51,17 +51,13 @@ var App = React.createClass({
     if (isLocalStorageSupported){
       if(localStorage["recipes"] === undefined){
         localStorage.setItem("recipes", JSON.stringify(myRecipes));
-        localStorage.setItem("name", JSON.stringify(name));
+        localStorage.setItem("name", name);
       }
       else {
         var retrievedData = localStorage.getItem("recipes");
         var retrieveName = localStorage.getItem("name");
         myRecipes = JSON.parse(retrievedData);
-        if(!retrieveName) {
-          name = name;
-        } else {
-          name = JSON.parse(retrieveName);
-        }
+        name = JSON.parse(retrieveName);
       }
     }    
     this.setState({ recipes: myRecipes,
@@ -90,7 +86,7 @@ var App = React.createClass({
   },
   handleNameChange: function(name){
     this.setState({name: name});
-    localStorage.setItem("name", JSON.stringify(name));
+    localStorage.setItem("name", name);
   },
   render: function(){
     
