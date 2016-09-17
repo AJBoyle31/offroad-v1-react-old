@@ -23,10 +23,12 @@ var AddRecipe = React.createClass({
     this.setState({ showAdd: false });
     var name = document.getElementById("formHorizontalRecipeName").value;
     var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
+    var directions = document.getElementById("formHorizontalRecipeDirections").value;
     var id = randomIdGenerator();
     var recipe = {
     "name": name,
     "ingredients": ingredients.split(','),
+    "directions": directions.split(','),
     "id": id
     };
     this.props.addRecipe(recipe);
@@ -57,7 +59,14 @@ var AddRecipe = React.createClass({
                   <FormControl type="text" placeholder="Ingredients separated by commas" />
                 </Col>
               </FormGroup>
-              
+              <FormGroup controlId="formHorizontalRecipeDirections">
+                <Col sm={2}>
+                  Directions:
+                </Col>
+                <Col sm={10}>
+                  <FormControl type="text" placeholder="Directions separated by commas" />
+                </Col>
+              </FormGroup>
             </Form>
           </Modal.Body>
           <Modal.Footer>
