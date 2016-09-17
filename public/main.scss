@@ -21,10 +21,10 @@ body {
   margin-right: auto;
   width: 65%;
 }
-#ingredientTitle {
+#ingredientTitle, #directionsTitle {
     text-align: center;
 }
-.ingredients {
+.ingredients, .directions {
     font-size: 150%;
 }
 #addButton {
