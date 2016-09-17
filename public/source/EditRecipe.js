@@ -16,15 +16,16 @@ var EditRecipe = React.createClass({
         this.setState({ showEdit: false });
         var name = document.getElementById("formHorizontalRecipeName").value;
         var ingredients = document.getElementById("formHorizontalRecipeIngredients").value;
+        var directions = document.getElementById("formHorizontalRecipeDirections").value;
         var recipe = {
         "name": name,
         "ingredients": ingredients.split(','),
+        "directions": directions.split(','),
         "id": this.props.id
         };
     this.props.editRecipe(recipe, this.props.id);
     },
     render: function(){
-        let ingredients = this.props.ingredients.join(', ');
         return (
             <div>
             <Button id="editButton" className="debuttons" bsStyle="success" onClick={this.open}>Edit Recipe</Button>
@@ -50,7 +51,14 @@ var EditRecipe = React.createClass({
                   <FormControl type="text" placeholder="Ingredients separated by commas" defaultValue={this.props.ingredients} />
                 </Col>
               </FormGroup>
-              
+              <FormGroup controlId="formHorizontalRecipeDirections">
+                <Col sm={2}>
+                  Directions:
+                </Col>
+                <Col sm={10}>
+                  <FormControl type="text" placeholder="Directions separated by commas" defaultValue={this.props.directions} />
+                </Col>
+              </FormGroup>
             </Form>
           </Modal.Body>
           <Modal.Footer>
