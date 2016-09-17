@@ -91,6 +91,8 @@
 	  try {
 	    localStorage.setItem("test", "test");
 	    localStorage.removeItem("test");
+	    localStorage.removeItem("recipes");
+	    localStorage.removeItem("name");
 	    return true;
 	  } catch (e) {
 	    return false;
@@ -107,25 +109,21 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
-
-	    /*  Commented out all local stoarge in order to work on directions
-	    
-	    if (isLocalStorageSupported){
-	      if(localStorage["recipes"] === undefined){
+	    if (isLocalStorageSupported) {
+	      if (localStorage["recipes"] === undefined) {
 	        localStorage.setItem("recipes", JSON.stringify(myRecipes));
 	        localStorage.setItem("name", "My Recipe Box");
-	      }
-	      else {
+	      } else {
 	        var retrievedData = localStorage.getItem("recipes");
 	        var retrieveName = localStorage.getItem("name");
 	        myRecipes = JSON.parse(retrievedData);
-	        if(!retrieveName) {
+	        if (!retrieveName) {
 	          name = name;
 	        } else {
 	          name = JSON.parse(retrieveName);
 	        }
 	      }
-	    }    */
+	    }
 	    this.setState({ recipes: myRecipes,
 	      name: name
 	    });
@@ -133,7 +131,7 @@
 	  addRecipe: function addRecipe(recipe) {
 	    var newRecipes = this.state.recipes.concat(recipe);
 	    this.setState({ recipes: newRecipes });
-	    //localStorage.setItem("recipes", JSON.stringify(newRecipes));
+	    localStorage.setItem("recipes", JSON.stringify(newRecipes));
 	  },
 	  editRecipe: function editRecipe(recipe, id) {
 	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
@@ -142,7 +140,7 @@
 	    var oldRecipes = this.state.recipes;
 	    oldRecipes[recipeIndex] = recipe;
 	    this.setState({ recipes: oldRecipes });
-	    //localStorage.setItem("recipes", JSON.stringify(oldRecipes));
+	    localStorage.setItem("recipes", JSON.stringify(oldRecipes));
 	  },
 	  deleteRecipe: function deleteRecipe(id) {
 	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
@@ -151,11 +149,11 @@
 	    var prevRecipeState = this.state.recipes;
 	    prevRecipeState.splice(recipeIndex, 1);
 	    this.setState({ recipes: prevRecipeState });
-	    //localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
+	    localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
 	  },
 	  handleNameChange: function handleNameChange(name) {
 	    this.setState({ name: name });
-	    //localStorage.setItem("name", JSON.stringify(name));
+	    localStorage.setItem("name", JSON.stringify(name));
 	  },
 	  render: function render() {
 
@@ -21769,8 +21767,6 @@
 	    this.props.editRecipe(recipe, this.props.id);
 	  },
 	  render: function render() {
-	    var ingredients = this.props.ingredients.join(', ');
-	    var directions = this.props.directions.join(', ');
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -21822,7 +21818,7 @@
 	              _react2.default.createElement(
 	                _reactBootstrap.Col,
 	                { sm: 10 },
-	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Ingredients separated by commas', defaultValue: ingredients })
+	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Ingredients separated by commas', defaultValue: this.props.ingredients })
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -21836,7 +21832,7 @@
 	              _react2.default.createElement(
 	                _reactBootstrap.Col,
 	                { sm: 10 },
-	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Directions separated by commas', defaultValue: directions })
+	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Directions separated by commas', defaultValue: this.props.directions })
 	              )
 	            )
 	          )
