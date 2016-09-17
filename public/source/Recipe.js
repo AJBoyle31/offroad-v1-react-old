@@ -40,7 +40,7 @@ var Recipe = React.createClass({
       recipeButton =
         <div id="buttonContainer">
         <ButtonToolbar>
-          <EditRecipe ingredients={this.props.ingredients} name={this.props.name} id={this.props.id} editRecipe={this.props.editRecipe}/>
+          <EditRecipe ingredients={this.props.ingredients} directions={this.props.directions} name={this.props.name} id={this.props.id} editRecipe={this.props.editRecipe}/>
           <Button className="debuttons" bsStyle="danger" id="deleteButton" onClick={this.handleClick}>Delete</Button> 
         </ButtonToolbar>
         </div>;
