@@ -58,11 +58,11 @@
 
 	var _Recipes2 = _interopRequireDefault(_Recipes);
 
-	var _AddRecipe = __webpack_require__(429);
+	var _AddRecipe = __webpack_require__(430);
 
 	var _AddRecipe2 = _interopRequireDefault(_AddRecipe);
 
-	var _Title = __webpack_require__(430);
+	var _Title = __webpack_require__(431);
 
 	var _Title2 = _interopRequireDefault(_Title);
 
@@ -71,18 +71,21 @@
 	var myRecipes = [{
 	  "name": "Banana Bread",
 	  "ingredients": ["Bananas", "Flour", "Eggs", "Sugar", "Love"],
+	  "directions": ["Set oven to 350 degrees", "Combine all ingredients", "Bake for 30 minutes"],
 	  "id": 1
 	}, {
 	  "name": "Sugar Cookies",
 	  "ingredients": ["Sugar", "Flour", "Eggs", "Love"],
+	  "directions": ["Set oven to 400 degrees", "Combine ingredients", "Bake for 10 minutes", "Serve hot"],
 	  "id": 2
 	}, {
 	  "name": "Chocolate Brownies",
 	  "ingredients": ["Chocolate", "Sugar", "Other stuff"],
+	  "directions": ["Set oven to 450 degrees", "Combine ingredients", "Pour batter in pan", "Bake for 45 minutes", "Let cool for 10 minutes"],
 	  "id": 3
 	}];
 
-	var name = "My recipe box";
+	var name = "My Recipe Box";
 
 	function isLocalStorageSupported() {
 	  try {
@@ -104,21 +107,25 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
-	    if (isLocalStorageSupported) {
-	      if (localStorage["recipes"] === undefined) {
+
+	    /*  Commented out all local stoarge in order to work on directions
+	    
+	    if (isLocalStorageSupported){
+	      if(localStorage["recipes"] === undefined){
 	        localStorage.setItem("recipes", JSON.stringify(myRecipes));
 	        localStorage.setItem("name", "My Recipe Box");
-	      } else {
+	      }
+	      else {
 	        var retrievedData = localStorage.getItem("recipes");
 	        var retrieveName = localStorage.getItem("name");
 	        myRecipes = JSON.parse(retrievedData);
-	        if (!retrieveName) {
+	        if(!retrieveName) {
 	          name = name;
 	        } else {
 	          name = JSON.parse(retrieveName);
 	        }
 	      }
-	    }
+	    }    */
 	    this.setState({ recipes: myRecipes,
 	      name: name
 	    });
@@ -126,7 +133,7 @@
 	  addRecipe: function addRecipe(recipe) {
 	    var newRecipes = this.state.recipes.concat(recipe);
 	    this.setState({ recipes: newRecipes });
-	    localStorage.setItem("recipes", JSON.stringify(newRecipes));
+	    //localStorage.setItem("recipes", JSON.stringify(newRecipes));
 	  },
 	  editRecipe: function editRecipe(recipe, id) {
 	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
@@ -135,7 +142,7 @@
 	    var oldRecipes = this.state.recipes;
 	    oldRecipes[recipeIndex] = recipe;
 	    this.setState({ recipes: oldRecipes });
-	    localStorage.setItem("recipes", JSON.stringify(oldRecipes));
+	    //localStorage.setItem("recipes", JSON.stringify(oldRecipes));
 	  },
 	  deleteRecipe: function deleteRecipe(id) {
 	    var recipeIndex = this.state.recipes.findIndex(function (recipe) {
@@ -144,11 +151,11 @@
 	    var prevRecipeState = this.state.recipes;
 	    prevRecipeState.splice(recipeIndex, 1);
 	    this.setState({ recipes: prevRecipeState });
-	    localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
+	    //localStorage.setItem("recipes", JSON.stringify(prevRecipeState));
 	  },
 	  handleNameChange: function handleNameChange(name) {
 	    this.setState({ name: name });
-	    localStorage.setItem("name", JSON.stringify(name));
+	    //localStorage.setItem("name", JSON.stringify(name));
 	  },
 	  render: function render() {
 
@@ -21551,6 +21558,7 @@
 	        id: recipe.id,
 	        name: recipe.name,
 	        ingredients: recipe.ingredients,
+	        directions: recipe.directions,
 	        editRecipe: _this.props.editRecipe,
 	        deleteRecipe: _this.props.deleteRecipe });
 	    });
@@ -21588,6 +21596,10 @@
 
 	var _reactBootstrap = __webpack_require__(176);
 
+	var _Directions = __webpack_require__(429);
+
+	var _Directions2 = _interopRequireDefault(_Directions);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Recipe = _react2.default.createClass({
@@ -21595,8 +21607,7 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      showIngredients: false,
-	      showEditButton: false
+	      showIngredients: false
 	    };
 	  },
 	  toggleIngredients: function toggleIngredients() {
@@ -21609,10 +21620,13 @@
 	  render: function render() {
 	    var ingredientTitle = void 0,
 	        ingredient = void 0,
-	        recipeButton = void 0;
+	        recipeButton = void 0,
+	        directionsTitle = void 0,
+	        directions = void 0;
 	    var num = 0;
 
 	    if (this.state.showIngredients) {
+
 	      ingredientTitle = _react2.default.createElement(
 	        'h3',
 	        { id: 'ingredientTitle' },
@@ -21622,6 +21636,17 @@
 	        num++;
 	        return _react2.default.createElement(_Ingredients2.default, { key: num, ingredient: ingredient });
 	      });
+
+	      directionsTitle = _react2.default.createElement(
+	        'h3',
+	        { id: 'directionsTitle' },
+	        'Directions'
+	      );
+	      directions = this.props.directions.map(function (step) {
+	        num++;
+	        return _react2.default.createElement(_Directions2.default, { key: num, step: step });
+	      });
+
 	      recipeButton = _react2.default.createElement(
 	        'div',
 	        { id: 'buttonContainer' },
@@ -21637,6 +21662,7 @@
 	        )
 	      );
 	    }
+
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'recipes' },
@@ -21654,6 +21680,12 @@
 	        'ul',
 	        null,
 	        ingredient
+	      ),
+	      directionsTitle,
+	      _react2.default.createElement(
+	        'ol',
+	        null,
+	        directions
 	      ),
 	      recipeButton
 	    );
@@ -40650,6 +40682,36 @@
 /* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Directions = _react2.default.createClass({
+	    displayName: "Directions",
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "li",
+	            { className: "directions" },
+	            this.props.step
+	        );
+	    }
+	});
+
+	exports.default = Directions;
+
+/***/ },
+/* 430 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -40773,7 +40835,7 @@
 	exports.default = AddRecipe;
 
 /***/ },
-/* 430 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
