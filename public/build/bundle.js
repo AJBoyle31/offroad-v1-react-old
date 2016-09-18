@@ -91,8 +91,6 @@
 	  try {
 	    localStorage.setItem("test", "test");
 	    localStorage.removeItem("test");
-	    localStorage.removeItem("recipes");
-	    localStorage.removeItem("name");
 	    return true;
 	  } catch (e) {
 	    return false;
@@ -112,16 +110,12 @@
 	    if (isLocalStorageSupported) {
 	      if (localStorage["recipes"] === undefined) {
 	        localStorage.setItem("recipes", JSON.stringify(myRecipes));
-	        localStorage.setItem("name", "My Recipe Box");
+	        localStorage.setItem("name", name);
 	      } else {
 	        var retrievedData = localStorage.getItem("recipes");
 	        var retrieveName = localStorage.getItem("name");
 	        myRecipes = JSON.parse(retrievedData);
-	        if (!retrieveName) {
-	          name = name;
-	        } else {
-	          name = JSON.parse(retrieveName);
-	        }
+	        name = retrieveName;
 	      }
 	    }
 	    this.setState({ recipes: myRecipes,
@@ -153,7 +147,7 @@
 	  },
 	  handleNameChange: function handleNameChange(name) {
 	    this.setState({ name: name });
-	    localStorage.setItem("name", JSON.stringify(name));
+	    localStorage.setItem("name", name);
 	  },
 	  render: function render() {
 
