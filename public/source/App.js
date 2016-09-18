@@ -52,10 +52,7 @@ var App = React.createClass({
       if(localStorage["recipes"] === undefined){
         localStorage.setItem("recipes", JSON.stringify(myRecipes));
       }
-      if(localStorage["name"] === undefined){
-        localStorage.setItem("name", JSON.stringify(name));
-      }
-      if(localStorage["recipes"] !== undefined && localStorage["name"] !== undefined){
+      else {
         var retrievedData = localStorage.getItem("recipes");
         var retrieveName = localStorage.getItem("name");
         myRecipes = JSON.parse(retrievedData);
