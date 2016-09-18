@@ -25,7 +25,7 @@ var myRecipes = [
   }
 ];
 
-var name = "My Recipe Box";
+var name;
 
 function isLocalStorageSupported(){
   try {
@@ -51,6 +51,7 @@ var App = React.createClass({
     if (isLocalStorageSupported){
       if(localStorage["recipes"] === undefined){
         localStorage.setItem("recipes", JSON.stringify(myRecipes));
+        localStorage.setItem("name", "My Recipe Box");
       }
       else {
         var retrievedData = localStorage.getItem("recipes");
