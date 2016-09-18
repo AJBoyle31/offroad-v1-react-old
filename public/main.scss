@@ -1,16 +1,18 @@
 body {
-    background: url("http://www.seriouseats.com/images/20100414-ph-macarons.jpg") no-repeat center fixed;
-    background-size: cover;
+  background: url("https://cdn-img-3.wanelo.com/p/f84/e1d/5f1/616ed0b477ba97705e78cad/x354-q80.jpg") no-repeat center fixed;
+  background-size: cover;
 }
 
 #title {
   text-align: center;
+  margin-top: 25px;
   margin-bottom: 50px;
   color: white;
   text-shadow: 2px 2px 2px black;
   font-size: 350%;
   a {
     text-decoration: none;
+    color: #ff0000;
     &:hover {
       cursor: pointer;
     }
