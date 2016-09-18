@@ -56,6 +56,9 @@ var App = React.createClass({
       else {
         var retrievedData = localStorage.getItem("recipes");
         var retrieveName = localStorage.getItem("name");
+        if(retrieveName === undefined){
+          retrieveName = "My Recipe Box"
+        }
         myRecipes = JSON.parse(retrievedData);
         name = JSON.parse(retrieveName);
       }
