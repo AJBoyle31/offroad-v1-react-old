@@ -1,58 +1,444 @@
+@font-face {
+  font-family: 'myFontRegular';
+  src: url(./fonts/ProximaNovaCond-Regular.otf); }
+@font-face {
+  font-family: 'myFontBold';
+  src: url(./fonts/ProximaNova-Bold.otf); }
+@font-face {
+  font-family: 'myFontSemibold';
+  src: url(./fonts/ProximaNovaCond-Semibold.otf); }
+@font-face {
+  font-family: 'myFontBlack';
+  src: url(./fonts/ProximaNova-Black.ttf); }
 body {
-  background: url("https://cdn-img-3.wanelo.com/p/f84/e1d/5f1/616ed0b477ba97705e78cad/x354-q80.jpg") no-repeat center fixed;
-  background-size: cover; }
+  background: #000;
+  color: #f2f2f2;
+  font-family: 'myFontRegular', sans-serif; }
 
-#title {
-  text-align: center;
-  margin-top: 25px;
-  margin-bottom: 50px;
-  color: white;
-  text-shadow: 2px 2px 2px black;
-  font-size: 350%; }
-  #title a {
-    text-decoration: none;
-    color: #ff0000; }
-    #title a:hover {
-      cursor: pointer; }
-
-#recipeContainer {
-  margin-left: auto;
-  margin-right: auto;
-  width: 65%; }
-
-#ingredientTitle, #directionsTitle {
+/*Heading*/
+#header {
   text-align: center; }
 
-.ingredients, .directions {
-  font-size: 150%; }
+#logo p {
+  font-size: 40px; }
 
-#addButton {
-  margin-top: 50px; }
+.headerDesc {
+  width: 65%;
+  margin: 0 auto 15px auto; }
 
-.recipes {
-  border-radius: 10px;
+#nav {
+  margin-bottom: 10px; }
+
+#nav p {
+  display: inline-block;
+  margin: 0px 50px 20px 50px;
+  font-size: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'myFontBold', sans-serif;
+  font-weight: bold; }
+
+#footerNav {
+  display: none; }
+
+.navLink {
+  text-decoration: none;
+  color: white; }
+
+/* Border */
+.border {
+  background: #25AD00;
+  height: 20px;
+  width: 99.8%;
+  margin-left: 2px; }
+
+/*Category*/
+#checklists {
+  width: 99%;
+  text-align: center;
+  margin-top: 11px; }
+
+.categories {
+  width: 207px;
+  background: #2A2A2A;
+  padding: 12px 0;
+  display: inline-block;
   vertical-align: top;
-  border: 2px solid black;
-  border-left: 5px solid #008fb3;
-  margin-left: 20px;
-  background-color: #e1e1ea;
-  padding: 5px 5px; }
+  text-align: left;
+  margin: 0 5px 10px 5px; }
 
-.debuttons {
+.headerContainer {
+  width: 55%;
+  display: inline-block;
+  vertical-align: top; }
+
+.categoryHeader {
+  text-align: center;
+  margin: 10px;
+  padding: 25px;
+  font-family: 'myFontBold', sans-serif;
+  display: inline-block;
+  width: 300px;
+  cursor: pointer;
+  background: #2A2A2A;
+  border: 3px solid transparent; }
+
+.categoryHeader img {
+  height: 30px;
+  width: 30px;
+  margin-bottom: 10px; }
+
+.categoryHeader .title {
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-size: 20px; }
+
+.categoryHeader p {
+  font-weight: bold;
+  font-family: 'myFontBlack', sans-serif;
+  font-size: 25px; }
+
+.greenBorder {
+  border: 3px solid white; }
+
+/*Checklists*/
+.list {
+  width: 45%;
+  display: inline-block;
+  margin-top: 10px; }
+
+.listHeader {
+  width: 100%;
+  padding: 10px;
+  font-weight: bold; }
+
+.list ul {
+  list-style-type: none; }
+
+.list li {
+  position: relative;
+  left: -30px;
+  width: 185px;
+  line-height: 24px;
+  font-family: 'myFontSemibold', sans-serif;
+  display: inline-block;
+  vertical-align: top; }
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer; }
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #2A2A2A;
+  border: 3px solid #A1A1A1;
+  border-radius: 3px; }
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none; }
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block; }
+
+/* Checkmark/indicator */
+.container .checkmark:after {
+  left: 3px;
+  top: -1px;
+  width: 5px;
+  height: 10px;
+  border: solid #f2f2f2;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+/*Clear Button*/
+.buttonDiv {
   display: inline-block; }
 
-.recipeName {
-  margin-top: 0px; }
-  .recipeName:hover {
+.button {
+  background-color: #A1A1A1;
+  border: none;
+  color: black;
+  padding: 12px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 15px 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px #2A2A2A; }
+
+/* Add Item Modal and Button */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); }
+
+.modal-main {
+  position: fixed;
+  background: black;
+  width: 550px;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  border: 2px solid #A1A1A1; }
+
+.display-block {
+  display: block; }
+
+.display-none {
+  display: none; }
+
+.modal-main button {
+  margin: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: #A1A1A1; }
+
+.modal-main button:hover {
+  cursor: pointer; }
+
+.addItemInput input {
+  width: 300px; }
+
+.addItemModalHeader p {
+  font-size: 30px;
+  margin: 0; }
+
+/* Footer */
+#footer {
+  font-size: 14px;
+  text-align: center;
+  color: #bfbfbf; }
+
+.lineThrough {
+  text-decoration: line-through; }
+
+.greenCategory {
+  background: #25AD00; }
+
+.shareBox {
+  text-align: center; }
+
+/* Share Buttons */
+ul.share-buttons {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 5px; }
+
+ul.share-buttons li {
+  display: inline;
+  margin: 0 5px; }
+
+ul.share-buttons .sr-only {
+  position: absolute;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden; }
+
+.fab, .fas {
+  color: #25AD00; }
+
+/* ABOUT US PAGE */
+.subPageHeader {
+  text-align: center;
+  font-size: 36px; }
+
+.aboutUsBox {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px; }
+
+.aboutUsBox div {
+  display: inline-block;
+  margin: 0 50px; }
+
+.aboutUsPic, .aboutUsInfo {
+  width: 500px;
+  height: 100%; }
+
+.aboutUsPic img {
+  width: 100%; }
+
+.aboutUsInfo {
+  vertical-align: top;
+  text-align: left;
+  font-size: 20px; }
+
+/* CONTACT US / FEEDBACK PAGE */
+.contactUsInfo {
+  margin: 0 auto;
+  width: 500px; }
+
+.contactUsInfo img {
+  width: 100%; }
+
+.contactUsInfo p {
+  text-align: center; }
+
+.email {
+  text-align: center;
+  font-size: 20px; }
+
+.email a {
+  text-decoration: none;
+  color: white; }
+
+.brokenpage p {
+  text-align: center; }
+
+/* TABLET and MOBILE */
+@media only screen and (max-width: 921px) {
+  /* Header */
+  #logo img {
+    width: 85%; }
+
+  #logo p {
+    font-size: 25px; }
+
+  .headerDesc {
+    width: 95%; }
+
+  /* Navigation */
+  #nav {
+    display: none; }
+
+  #footerNav {
+    display: block;
+    font-family: 'myFontBold', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px; }
+
+  #footerNav div {
+    padding: 0;
+    margin: 10px 0;
+    font-size: 18px; }
+
+  #footerNav p {
+    cursor: pointer;
+    text-transform: uppercase;
+    display: inline-block; }
+
+  .border {
+    height: 10px;
+    margin-bottom: 1px; }
+
+  /* Category */
+  #checklists {
+    width: 100%;
+    margin-top: 0px; }
+
+  .categories {
+    width: 100%;
+    background: black;
+    margin: 2px;
+    padding: 0; }
+
+  .headerContainer {
+    padding: 10px 0;
+    width: 100%; }
+
+  .headerContainer:hover {
     cursor: pointer; }
 
-#buttonContainer {
-  margin-left: auto;
-  margin-right: auto;
-  width: 200px; }
+  .categoryHeader {
+    position: relative;
+    top: -10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+    width: 95%; }
 
-#deleteButton, #editButton {
-  color: black;
-  border: 1px solid black; }
+  .categoryHeader:before {
+    content: url(./images/right.png);
+    padding: 7px; }
+
+  .categoryHeader.downArrow:before {
+    content: url(./images/down.png);
+    padding: 7px; }
+
+  .categoryHeader .title {
+    font-size: 17px;
+    margin-left: 11px;
+    width: 165px;
+    display: inline-block;
+    text-transform: uppercase; }
+
+  .categoryHeader p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 5px; }
+
+  .safety p {
+    padding-left: 15px; }
+
+  /*Checkboxes*/
+  .list {
+    display: none; }
+
+  .list li {
+    display: inline-block; }
+
+  .checkmark {
+    background: black; }
+
+  .greenHeader {
+    background: #25AD00; } }
+@media only screen and (max-width: 665px) {
+  .aboutUsBox div {
+    margin: 0; }
+
+  .aboutUsPic, .aboutUsInfo {
+    width: 90%; }
+
+  .aboutUsInfo {
+    font-size: 18px; }
+
+  .contactUsInfo {
+    width: 100%; }
+
+  .contactUsInfo img {
+    width: 100%; } }
 
 /*# sourceMappingURL=main.css.map */

@@ -23,7 +23,7 @@ module.exports = {
         loader: 'babel',
         // Passing queries/arguments to the loader
         query: {
-          presets: ['es2015', 'react']
+          presets: ['es2015', 'react', 'stage-0']
         }
       }
     ]
